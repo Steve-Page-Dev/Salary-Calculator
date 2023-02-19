@@ -1,13 +1,15 @@
 #pragma once
-#define Salary_Calculator
-#define Salary_Calculator.h
 
 #include <iostream>
 #include "Salary_Calculator.h"
-#include "Salary Calculator 2.0.cpp"
 
 using namespace std;
 
-int	stateSelection(int stateSelect) {
+int	stateSelection(int stateSelection) {
+	int stateSelect;
 
-}
+	cout << "Please enter your state (1 - 52)[PLEASE NOTE, ONLY MAINE WORKS CURRENTLY!]: " << endl;
+	cin >> stateSelect;
+
+	return 0;
+} 

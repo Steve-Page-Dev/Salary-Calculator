@@ -1,34 +1,33 @@
 // Salary Calculator 2.0.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include <iostream>
+#include <string>
 #include "Salary_Calculator.h"
-
-#define Salary_Calculator.h
 using namespace std;
 
 //Creating function to handle pay frequency determination.
-int payFrequency(int payCycle) {
+int payFrequency(int payCycleChoice) {
 
 	//Asking for pay frequency.
 	cout << "\nPlease select if you are paid weekly or bi-weekly. Enter 1 for weekly and 2 for bi-weekly: ";
-	cin >> payCycle;
+	cin >> payCycleChoice;
 
 	//Switch statement nested inside a while loop to handle pay frequency and errors from invalid entries.
-	while (switchLoop == false) {
-		switch (payCycle) {
+	while (isValidPayCycleChoice == false) {
+		switch (payCycleChoice) {
 		case 1:
-			switchLoop = true;
+			isValidPayCycleChoice = true;
 			weeklyPay = true;
 			break;
 		case 2:
-			switchLoop = true;
+			isValidPayCycleChoice = true;
 			biweeklyPay = true;
 			break;
 		default:
-			switchLoop = false;
-			cout << "Error. Please enter 1 for weekly pay or 2 for bi-weekly pay." << endl;
+			isValidPayCycleChoice = false;
+			cout << "\nError. Please enter 1 for weekly pay or 2 for bi-weekly pay." << endl;
 			cout << "\nPlease select if you are paid weekly or bi-weekly. Enter 1 for weekly and 2 for bi-weekly.";
-			cin >> payCycle;
+			cin >> payCycleChoice;
 		}
 	}
 	return 0;
@@ -38,7 +37,7 @@ int payFrequency(int payCycle) {
 double overtimeCalculator(double overtimeTotalWage) {
 
 	//Calculating overtime hours and displaying them.
-	overtimeHourlyWage = hourlyWage * overtimeMulti;
+	overtimeHourlyWage = hourlyWage * overtimeMultiplier;
 	cout << "\nYour overtime hourly wage is: $" << overtimeHourlyWage << ".";
 
 	//Calculating overtime total wage for a week and displaying it.(
@@ -116,36 +115,69 @@ double wageCalculator(double annualWage) {
 		//Displaying result.
 		cout << "\nWith overtime consideration, your 'true' hourly wage is: $" << trueWageS2 << " an hour.";
 	}
+
+	return 0;
+}
+void userInputState(string& stateInput) {
+	//Asking for user input for stateSelection.
+	cout << "\nPlease select the state in which you work in.";
+		cout << "\n(Please type out the name or abbreviation for the state. Ex// Maine or ME )[PLEASE NOTE: Only Maine works at present]: " << endl;
+	cin.ignore(); //clearing any remaining input in the input buffer. Removal causes program to skip over function.
+	getline(cin, stateInput);
+	cout << "\nYou have selected: " << stateInput << endl;
+}
+//Creating function to handle state selection, feeding choice into tax calculator.
+int stateSelection(int selectedStateIndex) {
+	bool stateChoiceLoop = false;
+	string state;
+	userInputState(state);
+	
+
+
+	//Struct to hold variables for state name or abbreviation.
+	struct State {
+		string name;
+		string abbreviation;
+	};
+
+	//Array of structs holding all 52 states and their abbreviations.
+	State states[52] = {
+		{"Alabama", "AL"}, {"Alaska", "AK"}, {"Arizona", "AZ"}, {"Arkansas", "AR"}, {"California", "CA"}, {"Colorado", "CO"}, {"Connecticut", "CT"}, {"Delaware", "DE"}, {"Florida", "FL"}, {"Georgia", "GA"},
+		{"Hawaii", "HI"}, {"Idaho", "ID"}, {"Illinois", "IL"}, {"Indiana", "IN"}, {"Iowa", "IA"}, {"Kansas", "KS"}, {"Kentucky", "KY"}, {"Louisiana", "LA"}, {"Maine", "ME"}, {"Maryland", "MD"}, {"Massachusettes", "MA"},
+		{"Michigan", "MI"}, {"Minnesota", "MN"}, {"Mississippi", "MS"}, {"Missouri", "MO"}, {"Montana", "MT"}, {"Nebraska", "NE"}, {"Nevada", "NV"}, {"New Hampshire", "NH"}, {"New Jersey", "NJ"}, {"New Mexico", "NM"},
+		{"New York", "NY"}, {"North Carolina", "NC"}, {"North Dakota", "ND"}, {"Ohio", "OH"}, {"Oklahoma", "OK"}, {"Oregon", "OR"}, {"Pennsylvania", "PA"}, {"Rhode Island", "RI"}, {"South Carolina", "SC"},
+		{"South Dakota", "SD"}, {"Tennessee", "TN"}, {"Texas", "TX"}, {"Utah", "UT"}, {"Vermont", "VT"}, {"Virginia", "VA"} , {"Washington", "WA"}, {"West Virginia", "WV"}, {"Wisconsin", "WI"}, {"Wyoming", "WY"}
+	};
+
+
 	return 0;
 }
 //Creating function to handle tax calculations.
-double taxCalculator(double wageTax) {
 
-	stateSelection obj;
-	obj.stateSelect();
+/*TO DO:::
+- Finish stetSelection function and add functionality to taxCalculator that takes stateSelection user input, accurate selects the correct state tax, and then uses
+  information to fuel further callculations.*/
+
+double taxCalculator(double wageTax) {
 
 	//Spacer.
 	cout << endl;
 
-	//Prompting for user imput for state selection.
-	cout << "Please select your state for taxation estimates (PLEASE NOTE ONLY MAINE IS WORKING CURRENTLY): " << endl;
-	
-
 	//Calculating state tax due with if else if statements and displaying tax rate.
 	if (annualWageOT > 0 && annualWageOT < 22450) {
-	stateTax = 0.058;
+		stateTax = 0.058;
 
-	cout << "\nYour Maine state tax rate is 5.8%.";
+		cout << "\nYour Maine state tax rate is 5.8%.";
 	}
 	else if (annualWageOT > 22450 && annualWageOT < 53150) {
-	stateTax = 0.0675;
+		stateTax = 0.0675;
 
-	cout << "\nYour Maine state tax rate is 6.75%.";
+		cout << "\nYour Maine state tax rate is 6.75%.";
 	}
 	else if (annualWageOT > 53150) {
-	stateTax = 0.0715;
+		stateTax = 0.0715;
 
-	cout << "\nYour Maine state tax rate is 7.15%.";
+		cout << "\nYour Maine state tax rate is 7.15%.";
 	}
 
 	//Calculating federal tax with if else if statements.
@@ -241,34 +273,41 @@ double taxCalculator(double wageTax) {
 	cout << "\nDo you have any wage deductions per pay cycle?? Please enter 1 for Yes or 2 for No: ";
 	cin >> deductionChoice;
 
-		//Nesting switch statment inside of while statement to handle choice loop and check for pay cycle.
+	//Nesting switch statment inside of while statement to handle choice loop and check for pay cycle.
 	while (deductionLoop == false) {
 		switch (deductionChoice) {
 		case 1:
 			deductionLoop = true;
 			//Asking for user input on deductions and calculating weekly, monthly, and annual deductions.
 			cout << "\nPlease enter your deductions: ";
-			cin >> deductions;
+			cin >> deductionAmount;
 
-			//Calculating weeklyTakeHome to aid in calculations.
+			/*TO DO:::
+			- Add functionality for groceries, bills, and other non deduction based expenses for calculations.
+			- Add functionality to determine if deductions are pre-tax or post tax (insurance, 401k, etc.)
+			- Calculate and display a final amount accounting for all deductions and espenses to provide a
+			  gross estimate of funds available to spend (FAS) per week/month/year.
+			 */
+
+			 //Calculating weeklyTakeHome to aid in calculations.
 			weeklyTakeHome = weeklyWageOT - weeklyTax;
 			//Calculating weekly deductions.
-			wTakeHomeDeduct = weeklyTakeHome - deductions;
+			weeklyTakeHomeDeduction = weeklyTakeHome - deductionAmount;
 			//Calculating monthlyTakeHome to aid in calculations.
 			monthlyTakeHome = monthlyWageOT - monthlyTax;
 			//Calculating monthly deductions.
-			mDeductions = deductions * 4;
-			mTakeHomeDeduct = monthlyTakeHome - mDeductions;
+			monthlyDeduction = deductionAmount * 4;
+			monthlyTakeHomeDeduction = monthlyTakeHome - monthlyDeduction;
 			//Calculating annualTakeHome to aid in calculations.
 			annualTakeHome = annualWageOT - annualTax;
 			//Calculating annual deductions.
-			aDeductions = mDeductions * 12;
-			aTakeHomeDeduct = annualTakeHome - aDeductions;
+			annualDeduction = monthlyDeduction * 12;
+			annualTakeHomeDeduction = annualTakeHome - annualDeduction;
 
 			//Displaying result.
-			cout << "\nYour weekly deductions are: $" << deductions << " bringing your weekly take home to: $" << wTakeHomeDeduct << ".";
-			cout << "\nYour monthly deductions are: $" << mDeductions << " bringing your monthly take home to: $" << mTakeHomeDeduct << ".";
-			cout << "\nYour annual deductions are: $" << aDeductions << " bringing your annual take home to: $" << aTakeHomeDeduct << ".";
+			cout << "\nYour weekly deductions are: $" << deductionAmount << " bringing your weekly take home to: $" << weeklyTakeHomeDeduction << ".";
+			cout << "\nYour monthly deductions are: $" << monthlyDeduction << " bringing your monthly take home to: $" << monthlyTakeHomeDeduction << ".";
+			cout << "\nYour annual deductions are: $" << annualDeduction << " bringing your annual take home to: $" << annualTakeHomeDeduction << ".";
 			break;
 		case 2:
 			deductionLoop = true;
@@ -289,26 +328,23 @@ int main() {
 	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVISE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN FINANCIALLY.";
 	cout << endl;
 	//Calling payFrequency function to handle cycle determination.
-	payFrequency(payCycle);
+	payFrequency(payCycleChoice);
+
+	//Calling stateSelection to handle state determination for calculations.
+	stateSelection(selectedStateIndex);
 
 	//Asking for user input for wage.
-	cout << "Please enter your hourly wage: ";
+	cout << "\nPlease enter your hourly wage: ";
 	cin >> hourlyWage;
-	//Debug to ensure variable is working.
-	//cout << "You entered: " << hourlyWage;
 
 	//Asking for useer input for hours.
-	cout << "\nPlease enter in your hours worked in one week: ";
+	cout << "\nPlease enter in your hours worked in one week: " << endl;
 	cin >> hoursWorkedWeek;
-	//Debug to ensure variable is working.
-	//cout << "You entered: " << hoursWorkedWeek;
 
 	//If statement to initiate overtime hours.
 	if (hoursWorkedWeek > 40) {
 		overtimeHours = hoursWorkedWeek - 40;
 		cout << "\nYou have " << overtimeHours << " hour(s) in overtime.";
-		//Debug to ensure variable is working.
-		//cout << "\nYou have " << overtimeHours << " hours in overtime.";
 	}
 	else {
 		overtimeHours = 0;
@@ -318,6 +354,9 @@ int main() {
 	overtimeCalculator(overtimeTotalWeek);
 	wageCalculator(annualWage);
 	taxCalculator(wageTax);
+
 	//Spacer.
 	cout << "\n";
+
+	return 0;
 }

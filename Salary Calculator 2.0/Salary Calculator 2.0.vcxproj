@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Salary Calculator 2.0.cpp" />
-    <ClCompile Include="State Selection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Salary_Calculator.h" />

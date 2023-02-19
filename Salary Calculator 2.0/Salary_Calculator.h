@@ -1,46 +1,35 @@
 //Header file created to contain var8iables and clean up code.
 #pragma once
-#define Salary_Calculator
+#include <iostream>
+#include <string>
 
-
-
-//Initializing variables used for wage calculations.
-//Hours.
-double hoursWorkedWeek, overtimeHours;
-
-//Wage vairables (hour/week/month/year).
-double hourlyWage, weeklyWage, biweeklyWage, monthlyWage, annualWage;
-
-//Overtime variables.
-double overtimeHourlyWage, overtimeTotalWeek, overtimeTotalBiweekly, overtimeTotalMonth, overtimeTotalAnnual;
-double weeklyWageOT, biweeklyWageOT, monthlyWageOT, annualWageOT;
-double overtimeMulti = 1.5;
-
-//Initializing variables for tax rates.
-//CHANGE THESE WHEN FUNCTIONALITY TO DETERMINE TAX RATES BASED ON ANNUAL INCOME IS ADDED!
-double incomeTax, stateTax, socialSecurityTax, medicareTax;
-
-//Initializing wageTax variable for tax calculations.
-double wageTax, weeklyTax, biweeklyTax, monthlyTax, annualTax;
-
-//Initializing variables for pay frequency determination.
+/*Initializing variables used for wage calculations, including variables for pay cycle frequency(weekly / biweekly) to better calculate
+user's wages for week/month/year. */
+double hoursWorkedWeek, overtimeHours, hourlyWage, weeklyWage, biweeklyWage, monthlyWage, annualWage;
 bool weeklyPay = false;
 bool biweeklyPay = false;
-bool switchLoop = false;
-int payCycle = 0;
+bool isValidPayCycleChoice = false;
+int payCycleChoice = 0;
+
+//Overtime variables to calulate user's overtime totals and wages for week/month/year.
+double overtimeHourlyWage, overtimeTotalWeek, overtimeTotalBiweekly, overtimeTotalMonth, overtimeTotalAnnual, weeklyWageOT, biweeklyWageOT, monthlyWageOT, annualWageOT;
+const double overtimeMultiplier = 1.5;
+
+/*Initializing variables for tax rates to use in calculation estimations for user, as well as variables for taxes taken out
+of wages every week/month/year. */
+double incomeTax, stateTax, socialSecurityTax, medicareTax, wageTax, weeklyTax, biweeklyTax, monthlyTax, annualTax;
+
+//Declaring and initializing variables for deductions to calculate user's wages with deductions removed.
+bool wageDeduction, deductionLoop, preTaxDeductionLoop;
+int deductionChoice, preTaxDeductionChoice;
+double deductionAmount, preTaxDeduction, preTaxMonthly, preTaxAnnual;
 
 //Initializing variables for take home calculations.
 double weeklyTakeHome, biweeklyTakeHome, monthlyTakeHome, annualTakeHome;
 
-//Declaring and initializing variables for deductions.
-bool wageDeduction, deductionLoop, pretaxDedLoop;
-int deductionChoice, pretaxDedChoice;
-double deductions, pretaxDeductions, pretaxMDeductions, pretaxADeductions;
-
 //Declaring and initializing variables to handle deduction calculations on take home pay.
-double wTakeHomeDeduct, mTakeHomeDeduct, aTakeHomeDeduct, mDeductions, aDeductions;
+double weeklyTakeHomeDeduction, monthlyTakeHomeDeduction, annualTakeHomeDeduction, monthlyDeduction, annualDeduction;
 
-class stateSelection {
-public:
-	void stateSelect();
-};
+//Declaring and initializing variable to handle state selection for state tax calculation.
+int selectedStateIndex;
+std::string state;
