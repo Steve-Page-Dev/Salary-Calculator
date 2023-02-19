@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+
 /*Initializing variables used for wage calculations, including variables for pay cycle frequency(weekly / biweekly) to better calculate
 user's wages for week/month/year. */
 double hoursWorkedWeek, overtimeHours, hourlyWage, weeklyWage, biweeklyWage, monthlyWage, annualWage;
@@ -33,3 +34,5 @@ double weeklyTakeHomeDeduction, monthlyTakeHomeDeduction, annualTakeHomeDeductio
 //Declaring and initializing variable to handle state selection for state tax calculation.
 int selectedStateIndex;
 std::string state;
+std::string isStateCorrectChoice;
+bool isValidState;

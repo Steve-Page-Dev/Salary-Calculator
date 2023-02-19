@@ -65,7 +65,7 @@ double overtimeCalculator(double overtimeTotalWage) {
 double wageCalculator(double annualWage) {
 
 	//Creating a blank line for ease of reading.
-	cout << "\n";
+	cout << endl;
 
 	//Calculating weekly wages with overtime, displaying result and checking if pay frequency is weekly.
 	if (weeklyPay == true) {
@@ -118,67 +118,74 @@ double wageCalculator(double annualWage) {
 
 	return 0;
 }
-void userInputState(string& stateInput) {
-	//Asking for user input for stateSelection.
-	cout << "\nPlease select the state in which you work in.";
-		cout << "\n(Please type out the name or abbreviation for the state. Ex// Maine or ME )[PLEASE NOTE: Only Maine works at present]: " << endl;
-	cin.ignore(); //clearing any remaining input in the input buffer. Removal causes program to skip over function.
-	getline(cin, stateInput);
-	cout << "\nYou have selected: " << stateInput << endl;
-}
-//Creating function to handle state selection, feeding choice into tax calculator.
-int stateSelection(int selectedStateIndex) {
-	bool stateChoiceLoop = false;
+
+/*TO DO:::
+- Finish stateSelection function and add functionality to taxCalculator that takes stateSelection user input, accurately selects the correct state tax, and then uses
+  information to fuel further callculations.
+
++ NON FUNCTIONAL. Code works, but does not yet pull state's tax information. 
+//Creating function to handle state selection, feeding choice into tax calculator function.
+double stateSelection() {
+	bool isValidState = false;
 	string state;
-	userInputState(state);
+	double stateTax = 0;
 	
-
-
-	//Struct to hold variables for state name or abbreviation.
+	//Struct to hold variables for state name, abbreviation and tax rates for the function to aid in the calulation of state taxes later in the program.
 	struct State {
 		string name;
 		string abbreviation;
+		double stateTax;
 	};
 
-	//Array of structs holding all 52 states and their abbreviations.
+	//Array of structs holding all 52 states, their abbreviations, and their tax rates.
 	State states[52] = {
-		{"Alabama", "AL"}, {"Alaska", "AK"}, {"Arizona", "AZ"}, {"Arkansas", "AR"}, {"California", "CA"}, {"Colorado", "CO"}, {"Connecticut", "CT"}, {"Delaware", "DE"}, {"Florida", "FL"}, {"Georgia", "GA"},
-		{"Hawaii", "HI"}, {"Idaho", "ID"}, {"Illinois", "IL"}, {"Indiana", "IN"}, {"Iowa", "IA"}, {"Kansas", "KS"}, {"Kentucky", "KY"}, {"Louisiana", "LA"}, {"Maine", "ME"}, {"Maryland", "MD"}, {"Massachusettes", "MA"},
-		{"Michigan", "MI"}, {"Minnesota", "MN"}, {"Mississippi", "MS"}, {"Missouri", "MO"}, {"Montana", "MT"}, {"Nebraska", "NE"}, {"Nevada", "NV"}, {"New Hampshire", "NH"}, {"New Jersey", "NJ"}, {"New Mexico", "NM"},
-		{"New York", "NY"}, {"North Carolina", "NC"}, {"North Dakota", "ND"}, {"Ohio", "OH"}, {"Oklahoma", "OK"}, {"Oregon", "OR"}, {"Pennsylvania", "PA"}, {"Rhode Island", "RI"}, {"South Carolina", "SC"},
-		{"South Dakota", "SD"}, {"Tennessee", "TN"}, {"Texas", "TX"}, {"Utah", "UT"}, {"Vermont", "VT"}, {"Virginia", "VA"} , {"Washington", "WA"}, {"West Virginia", "WV"}, {"Wisconsin", "WI"}, {"Wyoming", "WY"}
+		{"Alabama", "AL", 0.04}, {"Alaska", "AK", 0}, {"Arizona", "AZ", 0.056}, {"Arkansas", "AR", 0.065}, {"California", "CA", 0.0725}, {"Colorado", "CO", 0.029}, {"Connecticut", "CT", 0.0635},
+		{"Delaware", "DE", 0}, {"Florida", "FL", 0.06}, {"Georgia", "GA", 0.04}, {"Hawaii", "HI", 0.04}, {"Idaho", "ID", 0.06}, {"Illinois", "IL", 0.0625}, {"Indiana", "IN", 0.07}, {"Iowa", "IA", 0.06},
+		{"Kansas", "KS", 0.065}, {"Kentucky", "KY", 0.06}, {"Louisiana", "LA", 0.0445}, {"Maine", "ME", 0.055}, {"Maryland", "MD", 0.06}, {"Massachusettes", "MA", 0.0625}, {"Michigan", "MI", 0.06},
+		{"Minnesota", "MN", 0.06875}, {"Mississippi", "MS", 0.07}, {"Missouri", "MO", 0.04225}, {"Montana", "MT", 0}, {"Nebraska", "NE", 0.055}, {"Nevada", "NV", 0.0685}, {"New Hampshire", "NH", 0},
+		{"New Jersey", "NJ", 0.06625}, {"New Mexico", "NM", 0.05125}, {"New York", "NY", 0.04}, {"North Carolina", "NC", 0.0475}, {"North Dakota", "ND", 0.05}, {"Ohio", "OH", 0.0575},
+		{"Oklahoma", "OK", 0.045}, {"Oregon", "OR", 0}, {"Pennsylvania", "PA", 0.06}, {"Rhode Island", "RI", 0.07}, {"South Carolina", "SC", 0.06}, {"South Dakota", "SD", 0}, {"Tennessee", "TN", 0.07},
+		{"Texas", "TX", 0.0625}, {"Utah", "UT", 0.0485}, {"Vermont", "VT", 0.06}, {"Virginia", "VA", 0.043} , {"Washington", "WA", 0.065}, {"West Virginia", "WV", 0.06}, {"Wisconsin", "WI", 0.05},
+		{"Wyoming", "WY", 0.04}
 	};
+	//Variable to hold the state entered by the user.
+	State selectedState;
 
+	//Checking user input against 52 states in array to insure that information entered is valid and repeating the query if it is not valid.
+	while (!isValidState) {
+		//Prompting the user for input to determine which state to use for state tax calculations.
+		cout << "\nPlease enter the state that you work in.";
+		cout << "\n(Please type out the name or abbreviation for the state. Ex// Maine or ME.";
+		cout << "\n[PLEASE NOTE: Currently, only Maine has functionality, this will change with a future update: ";
+		cin >> state;
+		
+		for (int i = 0; i < 52; i++) {
+			if (state == states[i].name || state == states[i].abbreviation) {
+				isValidState = true;
+				//Sets the user entered state to the matching state in the array above.
+				selectedState = states[i];
+				break;
+			}
+		}
+		if (!isValidState) {
+			cout << "\nState choice invalid, please try again and enter the state name or abbreviation." << endl;
+		}
+	}
+	//Sets the stateTax variable to the user entered state's tax from the array above.
+	if (isValidState) {
+		stateTax = selectedState.stateTax;
+	}
+	//Displaying acceptance of state choice
+	cout << "\nState choice accepted." << endl;
+	cout << "\nYour state selection is: " << state << ". Your state tax rate is: " << stateTax;
 
-	return 0;
-}
+	return stateTax;
+}*/
 //Creating function to handle tax calculations.
-
-/*TO DO:::
-- Finish stetSelection function and add functionality to taxCalculator that takes stateSelection user input, accurate selects the correct state tax, and then uses
-  information to fuel further callculations.*/
-
 double taxCalculator(double wageTax) {
 
 	//Spacer.
 	cout << endl;
-
-	//Calculating state tax due with if else if statements and displaying tax rate.
-	if (annualWageOT > 0 && annualWageOT < 22450) {
-		stateTax = 0.058;
-
-		cout << "\nYour Maine state tax rate is 5.8%.";
-	}
-	else if (annualWageOT > 22450 && annualWageOT < 53150) {
-		stateTax = 0.0675;
-
-		cout << "\nYour Maine state tax rate is 6.75%.";
-	}
-	else if (annualWageOT > 53150) {
-		stateTax = 0.0715;
-
-		cout << "\nYour Maine state tax rate is 7.15%.";
-	}
 
 	//Calculating federal tax with if else if statements.
 	if (annualWageOT > 0 && annualWageOT < 10275) {
@@ -325,20 +332,20 @@ double taxCalculator(double wageTax) {
 int main() {
 
 	//Legal disclaimer with spacer.
-	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVISE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN FINANCIALLY.";
+	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVICE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN FINANCIALLY.";
 	cout << endl;
 	//Calling payFrequency function to handle cycle determination.
 	payFrequency(payCycleChoice);
 
 	//Calling stateSelection to handle state determination for calculations.
-	stateSelection(selectedStateIndex);
+	stateSelection();
 
 	//Asking for user input for wage.
 	cout << "\nPlease enter your hourly wage: ";
 	cin >> hourlyWage;
 
 	//Asking for useer input for hours.
-	cout << "\nPlease enter in your hours worked in one week: " << endl;
+	cout << "\nPlease enter in your hours worked in one week: ";
 	cin >> hoursWorkedWeek;
 
 	//If statement to initiate overtime hours.
