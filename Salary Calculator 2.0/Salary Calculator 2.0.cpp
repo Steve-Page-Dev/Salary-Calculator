@@ -1,8 +1,9 @@
 // Salary Calculator 2.0.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
 #include <iostream>
 #include "Salary_Calculator.h"
+
+#define Salary_Calculator.h
 using namespace std;
 
 //Creating function to handle pay frequency determination.
@@ -120,22 +121,29 @@ double wageCalculator(double annualWage) {
 //Creating function to handle tax calculations.
 double taxCalculator(double wageTax) {
 
+	stateSelection obj;
+	obj.stateSelect();
+
 	//Spacer.
 	cout << endl;
 
-	//Calculating Maine state tax due with if else if statements and displaying tax rate.
+	//Prompting for user imput for state selection.
+	cout << "Please select your state for taxation estimates (PLEASE NOTE ONLY MAINE IS WORKING CURRENTLY): " << endl;
+	
+
+	//Calculating state tax due with if else if statements and displaying tax rate.
 	if (annualWageOT > 0 && annualWageOT < 22450) {
-	maineStateTax = 0.058;
+	stateTax = 0.058;
 
 	cout << "\nYour Maine state tax rate is 5.8%.";
 	}
 	else if (annualWageOT > 22450 && annualWageOT < 53150) {
-	maineStateTax = 0.0675;
+	stateTax = 0.0675;
 
 	cout << "\nYour Maine state tax rate is 6.75%.";
 	}
 	else if (annualWageOT > 53150) {
-	maineStateTax = 0.0715;
+	stateTax = 0.0715;
 
 	cout << "\nYour Maine state tax rate is 7.15%.";
 	}
@@ -183,7 +191,7 @@ double taxCalculator(double wageTax) {
 	if (weeklyPay == true) {
 		//Initializing variables for weekly tax calculations.
 		double firstWTax = weeklyWageOT * incomeTax;
-		double secondWTax = weeklyWageOT * maineStateTax;
+		double secondWTax = weeklyWageOT * stateTax;
 		double thirdWTax = weeklyWageOT * socialSecurityTax;
 		double fourthWTax = weeklyWageOT * medicareTax;
 		double weeklyTax = firstWTax + secondWTax + thirdWTax + fourthWTax;
@@ -195,7 +203,7 @@ double taxCalculator(double wageTax) {
 	else if (biweeklyPay == true) {
 		//Initializing variables for biweekly tax calculations.
 		double firstBWTax = biweeklyWageOT * incomeTax;
-		double secondBWTax = biweeklyWageOT * maineStateTax;
+		double secondBWTax = biweeklyWageOT * stateTax;
 		double thirdBWTax = biweeklyWageOT * socialSecurityTax;
 		double fourthBWTax = biweeklyWageOT * medicareTax;
 		double biweeklyTax = firstBWTax + secondBWTax + thirdBWTax + fourthBWTax;
@@ -207,7 +215,7 @@ double taxCalculator(double wageTax) {
 	}
 	//Initializing variables for monthly tax calculations.
 	double firstMTax = monthlyWageOT * incomeTax;
-	double secondMTax = monthlyWageOT * maineStateTax;
+	double secondMTax = monthlyWageOT * stateTax;
 	double thirdMTax = monthlyWageOT * socialSecurityTax;
 	double fourthMTax = monthlyWageOT * medicareTax;
 	double monthlyTax = firstMTax + secondMTax + thirdMTax + fourthMTax;
@@ -218,7 +226,7 @@ double taxCalculator(double wageTax) {
 
 	//Initializing variables for annual tax calculations.
 	double firstATax = annualWageOT * incomeTax;
-	double secondATax = annualWageOT * maineStateTax;
+	double secondATax = annualWageOT * stateTax;
 	double thirdATax = annualWageOT * socialSecurityTax;
 	double fourthATax = annualWageOT * medicareTax;
 	double annualTax = firstATax + secondATax + thirdATax + fourthATax;
