@@ -37,9 +37,6 @@ double overtimeCalculator() {
 	/*TO DO::
 	-Streamline the process using only weeksInYear for better accuracy.
 	*/
-	//Declaring local variables
-	int weeksInMonth = 4;
-	int weeksInYear = 52;
 
 	//Calculating overtime hours and displaying them.
 	overtimeHourlyWage = hourlyWage * overtimeMultiplier;
@@ -68,7 +65,9 @@ double overtimeCalculator() {
 }
 //Creating function to handle wage calculations.
 double wageCalculator() {
-
+	/*TO DO::
+	- Streamline the process using only weeksInYear for better accuracy
+	*/
 	//Creating a blank line for ease of reading.
 	cout << endl;
 
@@ -79,12 +78,12 @@ double wageCalculator() {
 		cout << "\nYou make $" << weeklyWage << " per week, and $" << weeklyWageOT << " per week with overtime.";
 
 		//Calculating monthly wages with overtime and displaying result.
-		monthlyWage = weeklyWage * 4;
+		monthlyWage = weeklyWage * weeksInYear / 12;
 		monthlyWageOT = monthlyWage + overtimeTotalMonth;
 		cout << "\nYou make $" << monthlyWage << " per month, and $" << monthlyWageOT << " per month with overtime.";
 
 		//Calculating annual wages with overtime and displaying the result.
-		annualWage = monthlyWage * 12;
+		annualWage = weeklyWage * weeksInYear;
 		annualWageOT = annualWage + overtimeTotalAnnual;
 		cout << "\nYou make $" << annualWage << " per year, and $" << annualWageOT << " per year with overtime.";
 

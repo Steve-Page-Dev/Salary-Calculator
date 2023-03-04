@@ -11,6 +11,11 @@ bool weeklyPay = false;
 bool biweeklyPay = false;
 bool isValidPayCycle = false;
 int payCycleChoice;
+/*TO DO::
+	-Streamline the process using only weeksInYear for better accuracy.
+*/
+int weeksInMonth = 4;
+int weeksInYear = 52;
 
 //Overtime variables to calulate user's overtime totals and wages for week/month/year.
 double overtimeHourlyWage, overtimeTotalWeek, overtimeTotalBiweekly, overtimeTotalMonth, overtimeTotalAnnual, weeklyWageOT, biweeklyWageOT, monthlyWageOT, annualWageOT;
