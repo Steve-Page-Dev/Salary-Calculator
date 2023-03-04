@@ -7,15 +7,15 @@
 /*Initializing variables used for wage calculations, including variables for pay cycle frequency(weekly / biweekly) to better calculate
 user's wages for week/month/year. */
 double hoursWorkedWeek, overtimeHours, hourlyWage, weeklyWage, biweeklyWage, monthlyWage, annualWage;
-bool weeklyPay = false;
-bool biweeklyPay = false;
-bool isValidPayCycle = false;
+bool weeklyPay, biweeklyPay = false;
+bool isPayCycleValid, isWageValid, isHoursValid = false;
 int payCycleChoice;
 /*TO DO::
-	-Streamline the process using only weeksInYear for better accuracy.
+	- Streamline the process using only weeksInYear for better accuracy.
+	- Add error handling to user input.
 */
-int weeksInMonth = 4;
-int weeksInYear = 52;
+const int weeksInMonth = 4;
+const int weeksInYear = 52;
 
 //Overtime variables to calulate user's overtime totals and wages for week/month/year.
 double overtimeHourlyWage, overtimeTotalWeek, overtimeTotalBiweekly, overtimeTotalMonth, overtimeTotalAnnual, weeklyWageOT, biweeklyWageOT, monthlyWageOT, annualWageOT;

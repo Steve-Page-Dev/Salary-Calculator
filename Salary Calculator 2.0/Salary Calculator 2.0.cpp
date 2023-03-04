@@ -13,18 +13,18 @@ int payFrequency() {
 	cin >> payCycleChoice;
 
 	//Switch statement nested inside a while loop to handle pay frequency and errors from invalid entries.
-	while (isValidPayCycle == false) {
+	while (isPayCycleValid == false) {
 		switch (payCycleChoice) {
 		case 1:
-			isValidPayCycle = true;
+			isPayCycleValid = true;
 			weeklyPay = true;
 			break;
 		case 2:
-			isValidPayCycle = true;
+			isPayCycleValid = true;
 			biweeklyPay = true;
 			break;
 		default:
-			isValidPayCycle = false;
+			isPayCycleValid = false;
 			cout << "\nError. Please enter 1 for weekly pay or 2 for bi-weekly pay: ";
 			cin >> payCycleChoice;
 		}
@@ -40,26 +40,26 @@ double overtimeCalculator() {
 
 	//Calculating overtime hours and displaying them.
 	overtimeHourlyWage = hourlyWage * overtimeMultiplier;
-	cout << "\nYour overtime hourly wage is: $" << overtimeHourlyWage << ".";
+	cout << "\nYour estimated overtime hourly wage is: $" << overtimeHourlyWage << ".";
 
 	//Calculating overtime total wage for a week and displaying it.(
 	if (weeklyPay == true) {
 		overtimeTotalWeek = overtimeHourlyWage * overtimeHours;
-		cout << "\nYour total wages from overtime in a week is: $" << overtimeTotalWeek << ".";
+		cout << "\nYour estimated total wages from overtime in a week is: $" << overtimeTotalWeek << ".";
 	}
 	else if (biweeklyPay == true) {
 		overtimeTotalWeek = overtimeHourlyWage * overtimeHours;
 		overtimeTotalBiweekly = overtimeTotalWeek * 2;
-		cout << "\nYour total wages from overtime in two weeks is: $" << overtimeTotalBiweekly << ".";
+		cout << "\nYour estimated total wages from overtime in two weeks is: $" << overtimeTotalBiweekly << ".";
 	}
 
 	//Calculating overtime total wage for a month and displaying it.
 	overtimeTotalMonth = overtimeTotalWeek * weeksInMonth;
-	cout << "\nYour total wages from overtime in a month is: $" << overtimeTotalMonth << ".";
+	cout << "\nYour estimated total wages from overtime in a month is: $" << overtimeTotalMonth << ".";
 
 	//Calculating overtime total wage for a year and displaying it.
 	overtimeTotalAnnual = overtimeTotalMonth * weeksInYear;
-	cout << "\nYour total wages from overtime in a year is: $" << overtimeTotalAnnual << ".";
+	cout << "\nYour estimated total wages from overtime in a year is: $" << overtimeTotalAnnual << ".";
 
 	return 0;
 }
@@ -75,23 +75,23 @@ double wageCalculator() {
 	if (weeklyPay == true) {
 		weeklyWage = hourlyWage * hoursWorkedWeek;
 		weeklyWageOT = weeklyWage + overtimeTotalWeek;
-		cout << "\nYou make $" << weeklyWage << " per week, and $" << weeklyWageOT << " per week with overtime.";
+		cout << "\nYou make an estimated $" << weeklyWage << " per week, and $" << weeklyWageOT << " per week with overtime.";
 
 		//Calculating monthly wages with overtime and displaying result.
 		monthlyWage = weeklyWage * weeksInYear / 12;
 		monthlyWageOT = monthlyWage + overtimeTotalMonth;
-		cout << "\nYou make $" << monthlyWage << " per month, and $" << monthlyWageOT << " per month with overtime.";
+		cout << "\nYou make an estimated $" << monthlyWage << " per month, and $" << monthlyWageOT << " per month with overtime.";
 
 		//Calculating annual wages with overtime and displaying the result.
 		annualWage = weeklyWage * weeksInYear;
 		annualWageOT = annualWage + overtimeTotalAnnual;
-		cout << "\nYou make $" << annualWage << " per year, and $" << annualWageOT << " per year with overtime.";
+		cout << "\nYou make estimated $" << annualWage << " per year, and $" << annualWageOT << " per year with overtime.";
 
 		//Initializing variables to factor overtime into hourly wage. Dividing annual wage by 52 weeks, dividing that number by hoursWorkedWeek.
 		double trueWageS1 = annualWageOT / 52;
 		double trueWageS2 = trueWageS1 / hoursWorkedWeek;
 		//Displaying result.
-		cout << "\nWith overtime consideration, your 'true' hourly wage is: $" << trueWageS2 << " an hour.";
+		cout << "\nWith overtime consideration, your estimated 'true' hourly wage is: $" << trueWageS2 << " an hour.";
 	}
 	//Calculating bi-weekly wages with overtime, displaying result, and checking if pay frequency is bi-weekly.
 	else if (biweeklyPay == true) {
@@ -100,25 +100,37 @@ double wageCalculator() {
 		biweeklyWage = weeklyWage * 2;
 		weeklyWageOT = weeklyWage + overtimeTotalWeek;
 		biweeklyWageOT = weeklyWageOT * 2;
-		cout << "\nYou make $" << biweeklyWage << " every 2 weeks, and $" << biweeklyWageOT << " every 2 weeks with overtime.";
+		cout << "\nYou make an estimated $" << biweeklyWage << " every 2 weeks, and $" << biweeklyWageOT << " every 2 weeks with overtime.";
 
 		//Calculating monthly wages with overtime and displaying result.
-		monthlyWage = weeklyWage * 4;
+		monthlyWage = weeklyWage * weeksInYear / 12;
 		monthlyWageOT = monthlyWage + overtimeTotalMonth;
-		cout << "\nYou make $" << monthlyWage << " per month, and $" << monthlyWageOT << " per month with overtime.";
+		cout << "\nYou make an estimated $" << monthlyWage << " per month, and $" << monthlyWageOT << " per month with overtime.";
 
-
+		/* TO DO::
+		 - Fix this!! Currently multiplying monthlyWage by 52 in grossly bloating calculations!!!
+		 */
 		//Calculating annual wages with overtime and displaying the result.
 		annualWage = monthlyWage * 12;
 		annualWageOT = annualWage + overtimeTotalAnnual;
-		cout << "\nYou make $" << annualWage << " per year, and $" << annualWageOT << " per year with overtime.";
+		cout << "\nYou make an estimated $" << annualWage << " per year, and $" << annualWageOT << " per year with overtime.";
 
-		//Initializing variables to factor overtime into hourly wage. Dividing annual wage by 52 weeks, dividing that number by hoursWorkedWeek.
-		double trueWageS1 = annualWageOT / 52;
-		double trueWageS2 = trueWageS1 / hoursWorkedWeek;
-		//Displaying result.
-		cout << "\nWith overtime consideration, your 'true' hourly wage is: $" << trueWageS2 << " an hour.";
+		//If function to handle overtime wage factor calculations displaying true hourly wage estimate with overtime considerations.
+		if (overtimeHours != 0) {
+			//Initializing variables to factor overtime into hourly wage. Dividing annual wage by 52 weeks, dividing that number by hoursWorkedWeek.
+			double trueWageS1 = annualWageOT / 52;
+			double trueWageS2 = trueWageS1 / hoursWorkedWeek;
+
+			//Displaying result.
+			cout << "\nWith overtime consideration, your estimated 'true' hourly wage is: $" << trueWageS2 << " an hour.";
+		}
+		else if (overtimeHours <= 0) {
+			cout << "\nOperating with 0 hours of overtime. Your true wage is your hourly wage: " << hourlyWage;
+			cout << "\nThis estimate would change if overtime is added.";
+		}
 	}
+
+		
 
 	return 0;
 }
@@ -161,7 +173,7 @@ double stateSelection() {
 	//Checking user input against 52 states in array to insure that information entered is valid and repeating the query if it is not valid.
 	while (!isValidState) {
 		//Prompting the user for input to determine which state to use for state tax calculations.
-		cout << "\nPlease enter the state that you work in.";
+		cout << "\nPlease enter the state that you work in: ";
 		cin >> state;
 		
 		for (int i = 0; i < 52; i++) {
@@ -181,7 +193,7 @@ double stateSelection() {
 		stateTax = selectedState.stateTax;
 	}
 	//Displaying acceptance of state choice
-	cout << "\nYour state selection is: " << state << ". Your state tax rate is: " << stateTax;
+	cout << "\nYour state selection is: " << state;
 	//While loop to check for entry accuracy, looping the function if state entered is not correct.
 	while (!isCorrectState) {
 		cout << "\nIs your selection correct (yes or no): ";
@@ -191,6 +203,8 @@ double stateSelection() {
 
 		if (stateAccuracyAnswer == "yes") {
 			isCorrectState = true;
+
+			cout << "\nYour estimated state tax rate is : " << stateTax;
 		}
 		else if (stateAccuracyAnswer == "no") {
 			stateSelection();
@@ -211,37 +225,37 @@ double taxCalculator() {
 	if (annualWageOT > 0 && annualWageOT < 10275) {
 		incomeTax = 0.10;
 
-		cout << "\nYour federal tax rate is 10%.";
+		cout << "\nYour estimated federal tax rate is 10%.";
 	}
 	else if (annualWageOT > 10275 && annualWageOT < 41775) {
 		incomeTax = 0.12;
 
-		cout << "\nYour federal tax rate is 12%.";
+		cout << "\nYour estimated federal tax rate is 12%.";
 	}
 	else if (annualWageOT > 41775 && annualWageOT < 89075) {
 		incomeTax = 0.22;
 
-		cout << "\nYour federal tax rate is 22%.";
+		cout << "\nYour estimated federal tax rate is 22%.";
 	}
 	else if (annualWageOT > 89075 && annualWageOT < 17050) {
 		incomeTax = 0.24;
 
-		cout << "\nYour federal tax rate is 24%.";
+		cout << "\nYour estimated federal tax rate is 24%.";
 	}
 	else if (annualWageOT > 17050 && annualWageOT < 215950) {
 		incomeTax = 0.32;
 
-		cout << "\nYour federal tax rate is 32%.";
+		cout << "\nYour estimated federal tax rate is 32%.";
 	}
 	else if (annualWageOT > 215950 && annualWageOT < 323925) {
 		incomeTax = 0.35;
 
-		cout << "\nYour federal tax rate is 35%.";
+		cout << "\nYour estimated federal tax rate is 35%.";
 	}
 	else if (annualWageOT > 323925) {
 		incomeTax = 0.37;
 
-		cout << "\nYour federal tax rate is 37%.";
+		cout << "\nYour estimated federal tax rate is 37%.";
 	}
 	//Spacer for ease of reading.
 	cout << endl;
@@ -257,7 +271,7 @@ double taxCalculator() {
 		double weeklyTakeHome = weeklyWageOT - weeklyTax;
 
 		//Diplaying result.
-		cout << "\nYou pay $" << weeklyTax << " every week in taxes, with a take home amount of $" << weeklyTakeHome << " after taxes.";
+		cout << "\nYou pay an estimated $" << weeklyTax << " every week in taxes, with an estimated take home amount of $" << weeklyTakeHome << " after taxes.";
 	}
 	else if (biweeklyPay == true) {
 		//Initializing variables for biweekly tax calculations.
@@ -269,7 +283,7 @@ double taxCalculator() {
 		double biweeklyTakeHome = biweeklyWageOT - biweeklyTax;
 
 		//Diplaying result.
-		cout << "\nYou pay $" << biweeklyTax << " every two weeks in taxes, with a take home amount of $" << biweeklyTakeHome << " after taxes.";
+		cout << "\nYou pay an estimated $" << biweeklyTax << " every two weeks in taxes, with an estimated take home amount of $" << biweeklyTakeHome << " after taxes.";
 
 	}
 	//Initializing variables for monthly tax calculations.
@@ -281,7 +295,7 @@ double taxCalculator() {
 	double monthlyTakeHome = monthlyWageOT - monthlyTax;
 
 	//Diplaying result.
-	cout << "\nYou pay $" << monthlyTax << " every month in taxes, with a take home amount of $" << monthlyTakeHome << " after taxes.";
+	cout << "\nYou pay an estimated $" << monthlyTax << " every month in taxes, with an estimated take home amount of $" << monthlyTakeHome << " after taxes.";
 
 	//Initializing variables for annual tax calculations.
 	double firstATax = annualWageOT * incomeTax;
@@ -292,13 +306,9 @@ double taxCalculator() {
 	double annualTakeHome = annualWageOT - annualTax;
 
 	//Displaying result.
-	cout << "\nYou pay $" << annualTax << " every year in taxes, with a take home amount of $" << annualTakeHome << " after taxes.";
+	cout << "\nYou pay an estimated $" << annualTax << " every year in taxes, with an estimated take home amount of $" << annualTakeHome << " after taxes.";
 	//Spacer.
 	cout << endl;
-
-	//Asking for user input for wage deductions.
-	cout << "\nDo you have any wage deductions per pay cycle?? Please enter 1 for Yes or 2 for No: ";
-	cin >> deductionChoice;
 
 	/* 
 			TO DO:::
@@ -307,6 +317,9 @@ double taxCalculator() {
 			- Calculate and display a final amount accounting for all deductions and espenses to provide a
 			  gross estimate of funds available to spend (FAS) per week/month/year.
 
+	//Asking for user input for wage deductions.
+	cout << "\nDo you have any wage deductions per pay cycle?? Please enter 1 for Yes or 2 for No: ";
+	cin >> deductionChoice;
 	//Nesting switch statment inside of while statement to handle choice loop.
 	while (deductionLoop == false) {
 		switch (deductionChoice) {
@@ -315,8 +328,6 @@ double taxCalculator() {
 			//Asking for user input on deductions and calculating weekly, monthly, and annual deductions.
 			cout << "\nPlease enter your deductions (THIS FEATURE IS SEMI-FUNCTIONAL AND WILL BE FUNCTIONAL NEXT UPDATE): ";
 			cin >> deductionAmount;
-
-			 
 
 			 //Calculating weeklyTakeHome to aid in calculations.
 			weeklyTakeHome = weeklyWageOT - weeklyTax;
@@ -353,10 +364,10 @@ double taxCalculator() {
 //Main function to handle user input
 int main() {
 	//Declaring local variables.
-	bool isWageCorrect = false;
+	
 
 	//Legal disclaimer with spacer.
-	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVICE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN" << endl;
+	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVICE. THIS PROJECT IS MADE TO PURELY GIVE ESTIMATIONS TO BETTER PLAN" << endl;
 	cout << "FINANCIALLY." << endl;
 
 	//Calling payFrequency function to handle cycle determination.
@@ -371,25 +382,45 @@ int main() {
 	/* TO DO::
 		- add functionality so that user can type Yes, YES, Y, No, NO, or N for user experience.
 	*/
-	while (!isWageCorrect) {
-		cout << "You entered: " << hourlyWage << ". Is this correct (yes or no): " << " ";
-		string wageAccuracyAnswer;
-		cin >> wageAccuracyAnswer;
+	//While loop to handle errors in accuracy for wage entry.
+	while (!isWageValid) {
+		cout << "You entered: " << hourlyWage << ". Is this correct (yes or no)? " << " ";
+		string wageAnswer;
+		cin >> wageAnswer;
 
-		if (wageAccuracyAnswer == "yes") {
-			isWageCorrect = true;
+		if (wageAnswer == "yes") {
+			isWageValid = true;
 		}
-		else if (wageAccuracyAnswer == "no") {
+		else if (wageAnswer == "no") {
 			cout << "\nPlease enter your hourly wage: ";
 			cin >> hourlyWage;
 		}
 		else {
 			cout << "\nInvalid input. Please enter 'yes' or 'no': " << endl;
+			cin >> hourlyWage;
 		}
 	}
 	//Asking for useer input for hours.
 	cout << "\nPlease enter in your hours worked in one week: ";
 	cin >> hoursWorkedWeek;
+	//While loop to handle errors in accuracy for hours entry.
+	while (!isHoursValid) {
+		cout << "You entered: " << hoursWorkedWeek << ". Is this correct (yes or no)? " << " ";
+		string hoursAnswer;
+		cin >> hoursAnswer;
+
+		if (hoursAnswer == "yes") {
+			isHoursValid = true;
+		}
+		else if (hoursAnswer == "no") {
+			cout << "\nPlease enter your hours worked in one week: ";
+			cin >> hoursAnswer;
+		}
+		else {
+			cout << "\nInvalid input. Please enter 'yes' or 'no': " << endl;
+			cin >> hoursAnswer;
+		}
+	}
 
 	//If statement to initiate overtime hours.
 	if (hoursWorkedWeek > 40) {
@@ -406,7 +437,7 @@ int main() {
 	taxCalculator();
 
 	//Spacer.
-	cout << "\n";
+	cout << endl;
 
 	return 0;
 }
