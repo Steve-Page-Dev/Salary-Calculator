@@ -6,27 +6,26 @@
 using namespace std;
 
 //Creating function to handle pay frequency determination.
-int payFrequency(int payCycleChoice) {
+int payFrequency() {
 
 	//Asking for pay frequency.
 	cout << "\nPlease select if you are paid weekly or bi-weekly. Enter 1 for weekly and 2 for bi-weekly: ";
 	cin >> payCycleChoice;
 
 	//Switch statement nested inside a while loop to handle pay frequency and errors from invalid entries.
-	while (isValidPayCycleChoice == false) {
+	while (isValidPayCycle == false) {
 		switch (payCycleChoice) {
 		case 1:
-			isValidPayCycleChoice = true;
+			isValidPayCycle = true;
 			weeklyPay = true;
 			break;
 		case 2:
-			isValidPayCycleChoice = true;
+			isValidPayCycle = true;
 			biweeklyPay = true;
 			break;
 		default:
-			isValidPayCycleChoice = false;
-			cout << "\nError. Please enter 1 for weekly pay or 2 for bi-weekly pay." << endl;
-			cout << "\nPlease select if you are paid weekly or bi-weekly. Enter 1 for weekly and 2 for bi-weekly.";
+			isValidPayCycle = false;
+			cout << "\nError. Please enter 1 for weekly pay or 2 for bi-weekly pay. ";
 			cin >> payCycleChoice;
 		}
 	}
@@ -34,7 +33,13 @@ int payFrequency(int payCycleChoice) {
 }
 
 //Creating function to handle overtime calculations.
-double overtimeCalculator(double overtimeTotalWage) {
+double overtimeCalculator() {
+	/*TO DO::
+	-Streamline the process using only weeksInYear for better accuracy.
+	*/
+	//Declaring local variables
+	int weeksInMonth = 4;
+	int weeksInYear = 52;
 
 	//Calculating overtime hours and displaying them.
 	overtimeHourlyWage = hourlyWage * overtimeMultiplier;
@@ -52,17 +57,17 @@ double overtimeCalculator(double overtimeTotalWage) {
 	}
 
 	//Calculating overtime total wage for a month and displaying it.
-	overtimeTotalMonth = overtimeTotalWeek * 4;
+	overtimeTotalMonth = overtimeTotalWeek * weeksInMonth;
 	cout << "\nYour total wages from overtime in a month is: $" << overtimeTotalMonth << ".";
 
 	//Calculating overtime total wage for a year and displaying it.
-	overtimeTotalAnnual = overtimeTotalMonth * 12;
+	overtimeTotalAnnual = overtimeTotalMonth * weeksInYear;
 	cout << "\nYour total wages from overtime in a year is: $" << overtimeTotalAnnual << ".";
 
 	return 0;
 }
 //Creating function to handle wage calculations.
-double wageCalculator(double annualWage) {
+double wageCalculator() {
 
 	//Creating a blank line for ease of reading.
 	cout << endl;
@@ -118,17 +123,12 @@ double wageCalculator(double annualWage) {
 
 	return 0;
 }
-
-/*TO DO:::
-- Finish stateSelection function and add functionality to taxCalculator that takes stateSelection user input, accurately selects the correct state tax, and then uses
-  information to fuel further callculations.
-
-+ NON FUNCTIONAL. Code works, but does not yet pull state's tax information. 
 //Creating function to handle state selection, feeding choice into tax calculator function.
 double stateSelection() {
+	//Declaring local variables
 	bool isValidState = false;
 	string state;
-	double stateTax = 0;
+	double stateTax;
 	
 	//Struct to hold variables for state name, abbreviation and tax rates for the function to aid in the calulation of state taxes later in the program.
 	struct State {
@@ -137,8 +137,8 @@ double stateSelection() {
 		double stateTax;
 	};
 
-	//Array of structs holding all 52 states, their abbreviations, and their tax rates.
-	State states[52] = {
+	//Array of structs holding all 50 states, their abbreviations, and their tax rates.
+	State states[50] = {
 		{"Alabama", "AL", 0.04}, {"Alaska", "AK", 0}, {"Arizona", "AZ", 0.056}, {"Arkansas", "AR", 0.065}, {"California", "CA", 0.0725}, {"Colorado", "CO", 0.029}, {"Connecticut", "CT", 0.0635},
 		{"Delaware", "DE", 0}, {"Florida", "FL", 0.06}, {"Georgia", "GA", 0.04}, {"Hawaii", "HI", 0.04}, {"Idaho", "ID", 0.06}, {"Illinois", "IL", 0.0625}, {"Indiana", "IN", 0.07}, {"Iowa", "IA", 0.06},
 		{"Kansas", "KS", 0.065}, {"Kentucky", "KY", 0.06}, {"Louisiana", "LA", 0.0445}, {"Maine", "ME", 0.055}, {"Maryland", "MD", 0.06}, {"Massachusettes", "MA", 0.0625}, {"Michigan", "MI", 0.06},
@@ -148,6 +148,11 @@ double stateSelection() {
 		{"Texas", "TX", 0.0625}, {"Utah", "UT", 0.0485}, {"Vermont", "VT", 0.06}, {"Virginia", "VA", 0.043} , {"Washington", "WA", 0.065}, {"West Virginia", "WV", 0.06}, {"Wisconsin", "WI", 0.05},
 		{"Wyoming", "WY", 0.04}
 	};
+
+	/*Debug for array to verify size
+	int size = sizeof(states) / sizeof(states[0]);
+	cout << "Array size: " << size << endl;*/
+
 	//Variable to hold the state entered by the user.
 	State selectedState;
 
@@ -155,8 +160,6 @@ double stateSelection() {
 	while (!isValidState) {
 		//Prompting the user for input to determine which state to use for state tax calculations.
 		cout << "\nPlease enter the state that you work in.";
-		cout << "\n(Please type out the name or abbreviation for the state. Ex// Maine or ME.";
-		cout << "\n[PLEASE NOTE: Currently, only Maine has functionality, this will change with a future update: ";
 		cin >> state;
 		
 		for (int i = 0; i < 52; i++) {
@@ -178,12 +181,28 @@ double stateSelection() {
 	//Displaying acceptance of state choice
 	cout << "\nState choice accepted." << endl;
 	cout << "\nYour state selection is: " << state << ". Your state tax rate is: " << stateTax;
+	//While loop to check for entry accuracy, looping the function if state entered is not correct.
+	while (!isCorrectState) {
+		cout << "\nIs your selection correct (yes or no)" << endl;
+
+		string stateAccuracyAnswer;
+		cin >> stateAccuracyAnswer;
+
+		if (stateAccuracyAnswer == "yes") {
+			isCorrectState = true;
+		}
+		else if (stateAccuracyAnswer == "no") {
+			stateSelection();
+		}
+		else {
+			cout << "\nInvalid input. Please enter 'yes' or 'no'." << endl;
+		}
+	}
 
 	return stateTax;
-}*/
+}
 //Creating function to handle tax calculations.
-double taxCalculator(double wageTax) {
-
+double taxCalculator() {
 	//Spacer.
 	cout << endl;
 
@@ -330,12 +349,15 @@ double taxCalculator(double wageTax) {
 }
 //Main function to handle user input
 int main() {
+	//Declaring local variables.
+	bool isWageCorrect = false;
 
 	//Legal disclaimer with spacer.
-	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVICE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN FINANCIALLY.";
+	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVICE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN" << endl;
+	cout << "FINANCIALLY." << endl;
 	cout << endl;
 	//Calling payFrequency function to handle cycle determination.
-	payFrequency(payCycleChoice);
+	payFrequency();
 
 	//Calling stateSelection to handle state determination for calculations.
 	stateSelection();
@@ -343,6 +365,23 @@ int main() {
 	//Asking for user input for wage.
 	cout << "\nPlease enter your hourly wage: ";
 	cin >> hourlyWage;
+
+	while (!isWageCorrect) {
+		cout << "You entered: " << hourlyWage << ". Is this correct (yes or no)?" << " ";
+		string wageAccuracyAnswer;
+		cin >> wageAccuracyAnswer;
+
+		if (wageAccuracyAnswer == "yes") {
+			isWageCorrect = true;
+		}
+		else if (wageAccuracyAnswer == "no") {
+			cout << "\nPlease enter your hourly wage: ";
+			cin >> hourlyWage;
+		}
+		else {
+			cout << "\nInvalid input. Please enter 'yes' or 'no'." << endl;
+		}
+	}
 
 	//Asking for useer input for hours.
 	cout << "\nPlease enter in your hours worked in one week: ";
@@ -358,9 +397,9 @@ int main() {
 		cout << "\nYou have " << overtimeHours << " hour(s) in overtime.";
 	}
 	//Calling calculator functions.
-	overtimeCalculator(overtimeTotalWeek);
-	wageCalculator(annualWage);
-	taxCalculator(wageTax);
+	overtimeCalculator();
+	wageCalculator();
+	taxCalculator();
 
 	//Spacer.
 	cout << "\n";

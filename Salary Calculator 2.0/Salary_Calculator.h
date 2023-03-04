@@ -1,4 +1,4 @@
-//Header file created to contain var8iables and clean up code.
+//Header file created to contain global variables.
 #pragma once
 #include <iostream>
 #include <string>
@@ -9,8 +9,8 @@ user's wages for week/month/year. */
 double hoursWorkedWeek, overtimeHours, hourlyWage, weeklyWage, biweeklyWage, monthlyWage, annualWage;
 bool weeklyPay = false;
 bool biweeklyPay = false;
-bool isValidPayCycleChoice = false;
-int payCycleChoice = 0;
+bool isValidPayCycle = false;
+int payCycleChoice;
 
 //Overtime variables to calulate user's overtime totals and wages for week/month/year.
 double overtimeHourlyWage, overtimeTotalWeek, overtimeTotalBiweekly, overtimeTotalMonth, overtimeTotalAnnual, weeklyWageOT, biweeklyWageOT, monthlyWageOT, annualWageOT;
@@ -36,3 +36,4 @@ int selectedStateIndex;
 std::string state;
 std::string isStateCorrectChoice;
 bool isValidState;
+bool isCorrectState = false;
