@@ -25,7 +25,7 @@ int payFrequency() {
 			break;
 		default:
 			isValidPayCycle = false;
-			cout << "\nError. Please enter 1 for weekly pay or 2 for bi-weekly pay. ";
+			cout << "\nError. Please enter 1 for weekly pay or 2 for bi-weekly pay: ";
 			cin >> payCycleChoice;
 		}
 	}
@@ -137,6 +137,9 @@ double stateSelection() {
 		double stateTax;
 	};
 
+	/* TO DO::
+		- Add functionality so that input allows for different types of entry for a state. Ex// using lowercase letters for state abbreviation, capitals for state name, and so on.
+	*/
 	//Array of structs holding all 50 states, their abbreviations, and their tax rates.
 	State states[50] = {
 		{"Alabama", "AL", 0.04}, {"Alaska", "AK", 0}, {"Arizona", "AZ", 0.056}, {"Arkansas", "AR", 0.065}, {"California", "CA", 0.0725}, {"Colorado", "CO", 0.029}, {"Connecticut", "CT", 0.0635},
@@ -171,7 +174,7 @@ double stateSelection() {
 			}
 		}
 		if (!isValidState) {
-			cout << "\nState choice invalid, please try again and enter the state name or abbreviation." << endl;
+			cout << "\nState choice invalid, please try again and enter the state name or abbreviation: " << endl;
 		}
 	}
 	//Sets the stateTax variable to the user entered state's tax from the array above.
@@ -179,11 +182,10 @@ double stateSelection() {
 		stateTax = selectedState.stateTax;
 	}
 	//Displaying acceptance of state choice
-	cout << "\nState choice accepted." << endl;
 	cout << "\nYour state selection is: " << state << ". Your state tax rate is: " << stateTax;
 	//While loop to check for entry accuracy, looping the function if state entered is not correct.
 	while (!isCorrectState) {
-		cout << "\nIs your selection correct (yes or no)" << endl;
+		cout << "\nIs your selection correct (yes or no): ";
 
 		string stateAccuracyAnswer;
 		cin >> stateAccuracyAnswer;
@@ -195,7 +197,7 @@ double stateSelection() {
 			stateSelection();
 		}
 		else {
-			cout << "\nInvalid input. Please enter 'yes' or 'no'." << endl;
+			cout << "\nInvalid input. Please enter 'yes' or 'no': " << endl;
 		}
 	}
 
@@ -299,21 +301,23 @@ double taxCalculator() {
 	cout << "\nDo you have any wage deductions per pay cycle?? Please enter 1 for Yes or 2 for No: ";
 	cin >> deductionChoice;
 
-	//Nesting switch statment inside of while statement to handle choice loop and check for pay cycle.
+	/* 
+			TO DO:::
+			- Add functionality for groceries, bills, and other non deduction based expenses for calculations.
+			- Add functionality to determine if deductions are pre-tax or post tax (insurance, 401k, etc.)
+			- Calculate and display a final amount accounting for all deductions and espenses to provide a
+			  gross estimate of funds available to spend (FAS) per week/month/year.
+
+	//Nesting switch statment inside of while statement to handle choice loop.
 	while (deductionLoop == false) {
 		switch (deductionChoice) {
 		case 1:
 			deductionLoop = true;
 			//Asking for user input on deductions and calculating weekly, monthly, and annual deductions.
-			cout << "\nPlease enter your deductions: ";
+			cout << "\nPlease enter your deductions (THIS FEATURE IS SEMI-FUNCTIONAL AND WILL BE FUNCTIONAL NEXT UPDATE): ";
 			cin >> deductionAmount;
 
-			/*TO DO:::
-			- Add functionality for groceries, bills, and other non deduction based expenses for calculations.
-			- Add functionality to determine if deductions are pre-tax or post tax (insurance, 401k, etc.)
-			- Calculate and display a final amount accounting for all deductions and espenses to provide a
-			  gross estimate of funds available to spend (FAS) per week/month/year.
-			 */
+			 
 
 			 //Calculating weeklyTakeHome to aid in calculations.
 			weeklyTakeHome = weeklyWageOT - weeklyTax;
@@ -344,7 +348,7 @@ double taxCalculator() {
 			cout << "\nError, invalid input. Please enter either a 1 for Yes or a 2 for No: ";
 			cin >> deductionChoice;
 		}
-	}
+	}*/
 	return 0;
 }
 //Main function to handle user input
@@ -355,7 +359,7 @@ int main() {
 	//Legal disclaimer with spacer.
 	cout << "THIS APP IN NO WAY ACTS AS TAX OR FINANCIAL ADVICE. THIS PROJECT IS MADE TO PURELY GIVE A GUESS-TEMATE TO BETTER PLAN" << endl;
 	cout << "FINANCIALLY." << endl;
-	cout << endl;
+
 	//Calling payFrequency function to handle cycle determination.
 	payFrequency();
 
@@ -365,9 +369,11 @@ int main() {
 	//Asking for user input for wage.
 	cout << "\nPlease enter your hourly wage: ";
 	cin >> hourlyWage;
-
+	/* TO DO::
+		- add functionality so that user can type Yes, YES, Y, No, NO, or N for user experience.
+	*/
 	while (!isWageCorrect) {
-		cout << "You entered: " << hourlyWage << ". Is this correct (yes or no)?" << " ";
+		cout << "You entered: " << hourlyWage << ". Is this correct (yes or no): " << " ";
 		string wageAccuracyAnswer;
 		cin >> wageAccuracyAnswer;
 
@@ -379,10 +385,9 @@ int main() {
 			cin >> hourlyWage;
 		}
 		else {
-			cout << "\nInvalid input. Please enter 'yes' or 'no'." << endl;
+			cout << "\nInvalid input. Please enter 'yes' or 'no': " << endl;
 		}
 	}
-
 	//Asking for useer input for hours.
 	cout << "\nPlease enter in your hours worked in one week: ";
 	cin >> hoursWorkedWeek;
